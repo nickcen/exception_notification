@@ -6,7 +6,7 @@ PATH
       activesupport (~> 4.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://ruby.taobao.org/
   specs:
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
@@ -135,3 +135,6 @@ DEPENDENCIES
   rails (= 4.2.0)
   sqlite3
   tinder
+
+BUNDLED WITH
+   1.10.6

@@ -1,18 +1,15 @@
-module ExceptionNotifier
-  class SlackNotifier
-    include ExceptionNotifier::BacktraceCleaner
+require 'net/http'
 
-    attr_accessor :notifier
+module ExceptionNotifier
+  class JianliaoNotifier
+    include ExceptionNotifier::BacktraceCleaner
 
     def initialize(options)
       begin
         @ignore_data_if = options[:ignore_data_if]
 
-        webhook_url = options.fetch(:webhook_url)
-        @message_opts = options.fetch(:additional_parameters, {})
-        @notifier = Slack::Notifier.new webhook_url, options
+        @webhook_url = options.fetch(:webhook_url)
       rescue
-        @notifier = nil
       end
     end
 
@@ -23,15 +20,17 @@ module ExceptionNotifier
       message = enrich_message_with_data(message, options)
       message = enrich_message_with_backtrace(message, exception) if exception.backtrace
 
-      @notifier.ping(message, @message_opts) if valid?
+      uri = URI(@webhook_url)
+
+      payload = {
+        "authorName" => 'exception_notifier',
+        "text" => message
+      }
+
+      res = Net::HTTP.post_form(uri, payload)
     end
 
     protected
-
-    def valid?
-      !@notifier.nil?
-    end
-
     def enrich_message_with_data(message, options)
       def deep_reject(hash, block)
         hash.each do |k, v|
