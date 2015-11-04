@@ -9,6 +9,7 @@ module ExceptionNotifier
         @ignore_data_if = options[:ignore_data_if]
 
         @webhook_url = options.fetch(:webhook_url)
+        @application = options.fetch(:application)
       rescue
       end
     end
@@ -24,6 +25,7 @@ module ExceptionNotifier
 
       payload = {
         "authorName" => 'exception_notifier',
+        'title' => @application,
         "text" => message
       }
 
