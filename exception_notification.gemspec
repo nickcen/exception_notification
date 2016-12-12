@@ -16,10 +16,10 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -- test`.split("\n")
   s.require_path = 'lib'
 
-  s.add_dependency("actionmailer", "~> 5.0")
-  s.add_dependency("activesupport", "~> 5.0")
+  s.add_dependency("actionmailer", "> 4.0")
+  s.add_dependency("activesupport", "> 4.0")
 
-  s.add_development_dependency "rails", "~> 5.0"
+  s.add_development_dependency "rails", "> 4.0"
   # Sidekiq 3.2.2 does not support Ruby 1.9. 
   s.add_development_dependency "sidekiq", "~> 3.5.1"
 end
